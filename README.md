@@ -6,7 +6,7 @@
 
 We recommand the use of the following URL: https://shiny.cefe.cnrs.fr/PhenoSpace/.
 The GitHub repository does not include the dataset used in the application.
-It will be uploaded once the datapaper get publised.
+It will be uploaded once the datapaper get publised. 
 
 ## Dependencies
 
