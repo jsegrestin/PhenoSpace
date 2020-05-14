@@ -43,8 +43,7 @@ ui <- function(){
                                                               fluidRow(actionButton("app", "Access the application"), align = "center"),
                                                               img(src = "plante.png", width = '100%', height = "auto"),
                                                               p(align='right', "Release date: 02/2019"),
-                                                              HTML("<p align='right'> Developped by 
-                                                                    <a href='mailto:jsegrestin@gmail.com'>Jules Segrestin</a></p>")
+                                                              HTML("<p align='right'> Developped by Jules Segrestin</p>")
                                                     )
                                     )
                                     )
@@ -59,9 +58,9 @@ ui <- function(){
                                                  tabPanel("Customize the PCA",
                                                           p(""),
                                                           h4("Selection of traits, growth forms and components"),
-                                                          p("Dynamic visualization of the principal components
+                                                          HTML("<p>Dynamic visualization of the principal components
                                                 with a customized selection of traits and growth forms using 
-                                                the original data set analyzed in Díaz et al. (2016)"),
+                                                the original data set analyzed in Díaz <i>et al.</i> (2016)</p>"),
                                                           wellPanel(
                                                             fluidRow(
                                                               column(width = 6,
@@ -83,10 +82,10 @@ ui <- function(){
                                                             fluidRow(
                                                               h4("Components:"),
                                                               column(width = 6,
-                                                                     selectInput("axis1", "Axis 1 :", choices = c("PC1","PC2", "PC3", "PC4", "PC5"))
+                                                                     selectInput("axis1", "Axis 1:", choices = c("PC1","PC2", "PC3", "PC4", "PC5"))
                                                               ),
                                                               column(width = 6,
-                                                                     selectInput("axis2", "Axis 2 :", choices = c("PC2","PC3", "PC4", "PC5", "PC6"))
+                                                                     selectInput("axis2", "Axis 2:", choices = c("PC2","PC3", "PC4", "PC5", "PC6"))
                                                               )
                                                               )
                                                             ),
@@ -96,12 +95,12 @@ ui <- function(){
                                                           wellPanel(
                                                             fluidRow(
                                                               h4("Colored area"),
-                                                              selectInput("theme", NA, choices = c("All species", "Growth forms", "Herbs only", "Shrubs only", "Trees only")),
+                                                              selectInput("theme", "", choices = c("All species", "Growth forms", "Herbs only", "Shrubs only", "Trees only")),
                                                               h4("Find a species point:"),
-                                                              column(textInput("find", "Type the first letters and...", ""), width=6),
+                                                              column(textInput("find", "Type the first letters:", ""), width=6),
                                                               conditionalPanel(
                                                                 condition = "input.find != ''",
-                                                                column(selectInput("species", "... select a species name:", choices=c("NA")), width=6)
+                                                                column(selectInput("species", "Select a species name:", choices=c("NA")), width=6)
                                                               ),
                                                               conditionalPanel(
                                                                 condition = "output.sp != ''",
