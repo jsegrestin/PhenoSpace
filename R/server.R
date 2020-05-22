@@ -20,24 +20,27 @@ shinyServer(function(input, output, session){
     return(sum(c(input$H, input$SSD, input$LA, input$LMA, input$Nmass, input$SM)))
   }
   
-  # Update the original dataset depending on the user selection
+  # Load the original dataset depending on the user selection
   load_dataset <- function(input){
+    #get selections
     straits <- c(input$H, input$SSD, input$LA, input$LMA, input$Nmass, input$SM)
     traits<- c("H", "SSD", "LA", "LMA", "Nmass", "SM")[straits]
     sGF <- c(input$other, input$herb, input$other, input$other, input$shrub, input$tree, input$other)
     gf <- c("Aquatic", "Herb", "Liana", "Non-woody epiphyte", "Shrub", "Tree", "Vine")[sGF]
     colblob <- c("LOG10.Height.", "LOG10.SSD.", "LOG10.LA.", "LOG10.LMA.", "LOG10.Nmass.", "LOG10.Seed.Mass.")[straits]
     colblob <- c("name_TLP_TRY30_resolved", "GF", colblob)
+    #load dataset
     dat    <- read.csv("data/Blob&GF.csv", header = TRUE, sep = ";", dec = ".")
-    Blob_GF <- as.character(dat$GF[which(dat$GF %in% gf)])
+    #extarct selected values
     dat <- dat[which(dat$GF %in% gf), colblob, drop = FALSE]
     colnames(dat) <- c("sp", "GF", traits)
     return(dat)
   }
   
-  #Check and prepare input dataset
+  #Check and load input dataset
   load_input <- function(input){
     
+    #get selections
     straits <- c(input$LA, input$Nmass, input$LMA, input$H, input$SM, input$SSD)
     traits <- c("LA", "Nmass", "LMA", "H", "SM", "SSD")[straits]
     inFile <- input$file1
@@ -68,10 +71,12 @@ shinyServer(function(input, output, session){
           input_dat <- NULL
         }
       }else{ # not all traits
-        if(any(traits %in% colnames(input_dat))){ #some traits missing
+        if(any(traits %in% colnames(input_dat))){ 
+          #some traits missing
           warn <- paste0("<b>", paste(traits[!traits %in% colnames(input_dat)], collapse = ", "),
                          " not found in the uploaded file. Please check your csv file or unselect these traits in the 'Customize the PCA' tab.</b>")
-        }else{ # all wrong
+        }else{ 
+          # all wrong
           warn <- paste0("<b>Bad result, please select the correct separator character below or check your csv file.</b>")
         }
         input_dat <- NULL
@@ -134,7 +139,7 @@ shinyServer(function(input, output, session){
           leg <- "degr"
         } else {
           dat_col <- droplevels(as.factor(dat_col))
-          if (nlevels(dat_col) < 8){ #if categorial but under 8 categories -> discont colors
+          if (nlevels(dat_col) < 8){ #if categorial but under 8 categories -> qualitative colors
             selectedcol <- brewer.pal(9, name = "Set1")[-1]
             col <- selectedcol[dat_col]
             leg <- "dis"
@@ -147,7 +152,7 @@ shinyServer(function(input, output, session){
       }
     }
     
-    # type of plot according to the number of selected traits
+    # plot type according to the number of selected traits
     if(nrow(dat) > 0){
       if(ncol(dat) > 2){
         type <- "PCA"
@@ -196,7 +201,7 @@ shinyServer(function(input, output, session){
                     ylim = c(min(c(10^dat[, i], input_dat[, i]), na.rm = TRUE), 
                              max(c(10^dat[, i], input_dat[, i]), na.rm = TRUE)))
             boxplot(input_dat[, i], add = TRUE, border = 1, col = brewer.pal(3, name = "Set1")[2], at = 2, yaxt = "n")
-          }else{ #dataset vs boxplbot per category boxplot 
+          }else{ #dataset boxplot vs input boxplbot per category  
             boxplot(10^dat[, i], xlim= c(0.5, nlevels(dat_col) + 1.5), log = "y", main = parse(text = titre[i]),
                     outline = FALSE, col = "grey75",
                     ylim = c(min(c(10^dat[, i], input_dat[, i]), na.rm = TRUE),
@@ -207,7 +212,7 @@ shinyServer(function(input, output, session){
           }
         }
         
-        # add selected species on the boxplot dataset
+        # add selected species on the dataset boxplot
         if(length(list.sp$sp) > 0){
           sp_sort <- sort(list.sp$sp)
           ligne <- match(sp_sort, Blob_sp)
@@ -222,7 +227,7 @@ shinyServer(function(input, output, session){
     }
     
     # Draw main plot ####
-    # Graphical param
+    # Graphical parameters
     par(mar = c(5, 5, 0.1, 0.1), cex = 1.5)
     if(type == "PCA"){
       # Get selected axes
@@ -240,7 +245,7 @@ shinyServer(function(input, output, session){
       ylim <- c(-6, 6)
       xlab <- paste0(input$axis1, " (", eigen[Axis1], "%)")
       ylab <- paste0(input$axis2, " (", eigen[Axis2], "%)")
-      lims <- c(c(-7, 7), c(-7, 7)) # for density
+      lims <- c(c(-7, 7), c(-7, 7)) # for density areas
     } else {
       if(type == "Biplot"){
         # x and y values + graphical parameters
@@ -252,7 +257,7 @@ shinyServer(function(input, output, session){
                   max(y) + 0.1 * (max(y) - min(y)))
         xlab <- parse(text = titre[1])
         ylab <- parse(text = titre[2])
-        lims <- c(xlim, ylim) # for density
+        lims <- c(xlim, ylim) # for density areas
       }
     }
     
@@ -272,7 +277,7 @@ shinyServer(function(input, output, session){
       # Density areas ####
       if(input$theme == "All species"){
         # Diaz et al. theme
-        # density computaion
+        # density computation
         z <- MASS::kde2d(x, y, lims = lims, n = 100)
         dx <- diff(z$x[1:2]) 
         dy <- diff(z$y[1:2]) 
@@ -339,7 +344,7 @@ shinyServer(function(input, output, session){
                lwd = 1.5, length = .08)
         draw.ellipse(0, 0, a = mult, b = mult, lty = 2, border = "grey75")
         
-        #add variables labels -> in the major direction of the arrow
+        #add variables labels -> position in the major direction of the arrow
         pos <- NULL
         for (j in 1:nrow(PCA$co)){
           a <- PCA$co[j, c(Axis1, Axis2)]
@@ -348,7 +353,7 @@ shinyServer(function(input, output, session){
           pos <- c(pos, b)
         }
         
-        # draw labels contour in bg colour
+        # draw label contours in background colour
         dep <- cbind(c(0, .01), c(.01, .01), c(.01, 0),
                      c(.01, -.01), c(0, -.01), c(-.01, -.01),
                      c(-.01, 0), c(.01, -.01))
@@ -378,7 +383,7 @@ shinyServer(function(input, output, session){
       # Draw infile points ####
       if (!is.null(input_dat)){
         
-        #preparation of input data coordinates on the plot
+        #preparation of input data coordinates on the plot axes
         if(type == "PCA"){
           #input data is log-transformed and center + sclaed using the dataset mean and sd
           input_dat <- t(apply(input_dat[,traits], MARGIN = 1, function(X){(log10(X) - means) / sds}))
@@ -410,7 +415,7 @@ shinyServer(function(input, output, session){
         }
       }
       
-      # Draw selected species ####
+      # Draw selected species points ####
       
       if(length(list.sp$sp) > 0){
         sp_sort <- sort(list.sp$sp)
@@ -468,10 +473,10 @@ shinyServer(function(input, output, session){
   
   ### Observe ####
   
-  #access to the app from homepage link
+  #access to the app from the homepage link
   observeEvent(input$app, updateTabsetPanel(session = session, inputId = "tabset", selected = "app"))
   
-  #update the number of axis available according to user selection
+  #update the number of available axes according to user selection
   observeEvent(c(input$H, input$SSD, input$LA, input$LMA, input$Nmass, input$SM),
                {updateSelectInput(session = session, inputId = "axis1", choices = paste0("PC", 1:(check_variables(input)-1)))
                  updateSelectInput(session = session, inputId = "axis2", choices = paste0("PC", 2:check_variables(input)))})

@@ -26,7 +26,7 @@ ui <- function(){
                                     
                                     fluidRow(column(width = 6, offset = 3,
                                                     wellPanel(align = "justify",
-                                                              h1("PhenoSpace 1.0.0", align = "center"),
+                                                              HTML("<h1 align = 'center'>PhenoSpace <i>1.0.0</i> </h1>"),
                                                               br(),
                                                               HTML("<p>PhenoSpace is a shiny application aiming at visualizing the position of any 
                                                                     individual/population/species in the phenotypic space of the 'Global Spectrum of 
@@ -41,9 +41,7 @@ ui <- function(){
                                                                     and (3) to download figures and data coordinates produced by the application.
                                                                 "),
                                                               fluidRow(actionButton("app", "Access the application"), align = "center"),
-                                                              img(src = "plante.png", width = '100%', height = "auto"),
-                                                              p(align='right', "Release date: 02/2019"),
-                                                              HTML("<p align='right'> Developped by Jules Segrestin</p>")
+                                                              img(src = "plante.png", width = '100%', height = "auto")
                                                     )
                                     )
                                     )
@@ -118,6 +116,7 @@ ui <- function(){
                                                           p("The traits values must be expressed in m (H), mg/mm3 (SSD), mm2 (LA), g/m2 (LMA), mg/g (Nmass) and mg (SM)."),
                                                           p("The csv file can also contain one or several extra columns with qualitative or quantitative values
                                               identified with different colours in the figure."),
+                                                          HTML("<p> An example file containing 5 traits for 55 species can be downloaded <a target='blank' href='example.csv'>here</a>. </p>"),
                                                           wellPanel(
                                                             fileInput('file1', 'Choose CSV File',
                                                                       accept=c('text/csv', 
@@ -166,6 +165,16 @@ ui <- function(){
                                                             fluidRow(align = "center", downloadButton("downplot", label = "Download", class = NULL))
                                                           ),
                                                           conditionalPanel(
+                                                            condition = "!output.file",
+                                                            h4("Download the coordinates of your data set on the PCA:"),
+                                                            wellPanel(
+                                                              fluidRow(
+                                                                p("A file including the coordinates of your data set on the PCA will appear here after a successful upload in the 'Porject you data' tab."),
+                                                                p("PC coordinates are computed for dataset that containt at least three traits.")
+                                                              )
+                                                            )
+                                                          ),
+                                                          conditionalPanel(
                                                             condition = "output.file",
                                                             h4("Download the coordinates of your data set on the PCA:"),
                                                             wellPanel(
@@ -193,12 +202,24 @@ ui <- function(){
                                                ),
                                                conditionalPanel(
                                                  condition = "output.meme",
-                                                 h1("Error, please reconsider your panel selections", align = "center"),
-                                                 img(src = "meme.jpg", width = '550px', height = "auto", style="margin:150px 0px"),
+                                                 h1("Error, please reconsider your panel selections", align = "center", style="margin:150px 0px 10px 0px"),
+                                                 img(src = "meme.jpg", width = '300px', height = "auto"),
                                                  align = "center"
                                                )
                                         )
                                       )    
+                                    )
+                           ),
+                           tabPanel("About",
+                                    
+                                    fluidRow(column(width = 6, offset = 3,
+                                                    wellPanel(align = "justify",
+                                                              HTML("<h1 align = 'center'>PhenoSpace <i>1.0.0</i> </h1>"),
+                                                              p("22/05/2020", align = "center"),
+                                                              HTML("<p align = 'center'><img src = 'GitHub.png' width = '20px' height = 'auto'> <a target='_blank' rel='noopener noreferrer' href='https://github.com/jsegrestin/phenospace'> We are on GitHub </a></p>"),
+                                                              HTML("<p><b>Cite the application:</b> Segrestin, J., Sartori, K., Navas, M.-L., Kattge, J., Díaz, S., Garnier, É. (2020) PhenoSpace: a Shiny application to visualize trait data in the phenotypic space of the Global Spectrum of Plant Form and Function </p>")
+                                                              )
+                                    )
                                     )
                            )
                 )
