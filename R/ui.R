@@ -8,7 +8,7 @@
 library(shiny)
 
 ui <- function(){
-       
+  
   bootstrapPage('',
                 
                 tags$style(type = 'text/css',
@@ -85,8 +85,8 @@ ui <- function(){
                                                               column(width = 6,
                                                                      selectInput("axis2", "Axis 2:", choices = c("PC2","PC3", "PC4", "PC5", "PC6"))
                                                               )
-                                                              )
-                                                            ),
+                                                            )
+                                                          ),
                                                           h4("Density areas and species identification"),
                                                           p("Customize density areas according to several criteria and
                                                             indentify a set of species within the customized PCA"),
@@ -113,7 +113,7 @@ ui <- function(){
                                                           p("Column names must be H for Plant height, SSD for Stem specific density,
                                               LA for Leaf area, LMA for Leaf mass per area, Nmass for Mass-based leaf 
                                               nitrogen content and SM for Diaspore mass."),
-                                                          p("The traits values must be expressed in m (H), mg/mm3 (SSD), mm2 (LA), g/m2 (LMA), mg/g (Nmass) and mg (SM)."),
+                                                          HTML("<p> The traits values must be expressed in m (H), mg.mm<sup>-3</sup> (SSD), mm<sup>2</sup> (LA), g.m<sup>-2</sup> (LMA), mg.g<sp>-1</sup> (Nmass) and mg (SM).</p>"),
                                                           p("The csv file can also contain one or several extra columns with qualitative or quantitative values
                                               identified with different colours in the figure."),
                                                           HTML("<p> An example file containing 5 traits for 55 species can be downloaded <a target='blank' href='example.csv'>here</a>. </p>"),
@@ -164,33 +164,27 @@ ui <- function(){
                                                             ),
                                                             fluidRow(align = "center", downloadButton("downplot", label = "Download", class = NULL))
                                                           ),
-                                                          conditionalPanel(
-                                                            condition = "!output.file",
-                                                            h4("Download the coordinates of your data set on the PCA:"),
-                                                            wellPanel(
-                                                              fluidRow(
-                                                                p("A file including the coordinates of your data set on the PCA will appear here after a successful upload in the 'Porject you data' tab."),
-                                                                p("PC coordinates are computed for dataset that containt at least three traits.")
-                                                              )
-                                                            )
-                                                          ),
-                                                          conditionalPanel(
-                                                            condition = "output.file",
-                                                            h4("Download the coordinates of your data set on the PCA:"),
-                                                            wellPanel(
-                                                              fluidRow(
-                                                                textInput("name_csv", "File name: ", "PhenoSpace"),
-                                                                column(radioButtons('sep_csv', 'Separator',
-                                                                                    c(Semicolon=';',
-                                                                                      Comma=',',
-                                                                                      Tab='\t'),
-                                                                                    ';'),width = 6),
-                                                                column(radioButtons("dec_csv", "Decimal",
-                                                                                    c(Dot='.',
-                                                                                      Comma=','),
-                                                                                    "."),width = 6)
-                                                              ),
+                                                          h4("Download the coordinates of your data set on the PCA:"),
+                                                          wellPanel(
+                                                            fluidRow(
+                                                              textInput("name_csv", "File name: ", "PhenoSpace"),
+                                                              column(radioButtons('sep_csv', 'Separator',
+                                                                                  c(Semicolon=';',
+                                                                                    Comma=',',
+                                                                                    Tab='\t'),
+                                                                                  ';'),width = 6),
+                                                              column(radioButtons("dec_csv", "Decimal",
+                                                                                  c(Dot='.',
+                                                                                    Comma=','),
+                                                                                  "."),width = 6)
+                                                            ),
+                                                            conditionalPanel(
+                                                              condition = "output.file",
                                                               fluidRow(align = "center", downloadButton("downcsv", label = "Download", class = NULL))
+                                                            ),
+                                                            conditionalPanel(
+                                                              condition = "!output.file",
+                                                              p("This feature is enabled when a dataset containing at least three traits is succesfully uploaded in the 'Project your data' tab.")
                                                             )
                                                           )
                                                  ))),
@@ -218,7 +212,7 @@ ui <- function(){
                                                               p("22/05/2020", align = "center"),
                                                               HTML("<p align = 'center'><img src = 'GitHub.png' width = '20px' height = 'auto'> <a target='_blank' rel='noopener noreferrer' href='https://github.com/jsegrestin/phenospace'> We are on GitHub </a></p>"),
                                                               HTML("<p><b>Cite the application:</b> Segrestin, J., Sartori, K., Navas, M.-L., Kattge, J., Díaz, S., Garnier, É. (2020) PhenoSpace: a Shiny application to visualize trait data in the phenotypic space of the Global Spectrum of Plant Form and Function </p>")
-                                                              )
+                                                    )
                                     )
                                     )
                            )

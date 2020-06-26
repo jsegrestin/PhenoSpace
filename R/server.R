@@ -58,7 +58,7 @@ shinyServer(function(input, output, session){
                            "</b>")
             input_dat <- NULL
           } else { # all good
-            warn <- paste0("<b>All selected traits found in the uploaded file for ",
+            warn <- paste0("<b>All selected traits were found in the uploaded file for ",
                            nrow(na.omit(input_dat)), " rows. ",
                            nrow(input_dat) - nrow(na.omit(input_dat))," incomplete rows omitted.</b>")
             
