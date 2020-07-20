@@ -123,11 +123,11 @@ shinyServer(function(input, output, session){
     input_dat <- load_input(input)[[1]]
     if (!is.null(input_dat)) input_dat <- input_dat[complete.cases(input_dat[, traits]),]
     
-    # Get color legend from input datatset
+    # Get color legend from input datatset ####
     if (!is.null(input_dat)){
       # if not specifyed -> blue
       if(input$colors %in% c("NA", "none")){
-        col <- brewer.pal(3, name = "Set1")[2]
+        col <- brewer.pal(3, name = "Set2")[3]
         leg <- "none"
       }else{
         dat_col <- input_dat[, input$colors]
@@ -140,7 +140,7 @@ shinyServer(function(input, output, session){
         } else {
           dat_col <- droplevels(as.factor(dat_col))
           if (nlevels(dat_col) < 8){ #if categorial but under 8 categories -> qualitative colors
-            selectedcol <- brewer.pal(9, name = "Set1")[-1]
+            selectedcol <- brewer.pal(8, name = "Set2")
             col <- selectedcol[dat_col]
             leg <- "dis"
           }else{ #if categorial but more than 8 categories -> blue gradient
@@ -152,7 +152,7 @@ shinyServer(function(input, output, session){
       }
     }
     
-    # plot type according to the number of selected traits
+    # plot type according to the number of selected traits ####
     if(nrow(dat) > 0){
       if(ncol(dat) > 2){
         type <- "PCA"
@@ -200,7 +200,7 @@ shinyServer(function(input, output, session){
                     outline = FALSE, col = "grey75",
                     ylim = c(min(c(10^dat[, i], input_dat[, i]), na.rm = TRUE), 
                              max(c(10^dat[, i], input_dat[, i]), na.rm = TRUE)))
-            boxplot(input_dat[, i], add = TRUE, border = 1, col = brewer.pal(3, name = "Set1")[2], at = 2, yaxt = "n")
+            boxplot(input_dat[, i], add = TRUE, border = 1, col = col, at = 2, yaxt = "n")
           }else{ #dataset boxplot vs input boxplbot per category  
             boxplot(10^dat[, i], xlim= c(0.5, nlevels(dat_col) + 1.5), log = "y", main = parse(text = titre[i]),
                     outline = FALSE, col = "grey75",
@@ -328,7 +328,7 @@ shinyServer(function(input, output, session){
             contour(z, labels = prob, levels = round(levelsc, 7), add = T, col = colGF2[i], labcex = 1)
           }
           #add legend
-          legend("topleft", legend = c("Herbs", "Shrubs", "Trees")[selec[c(2,1,3)]], fill = colGF[selec[c(2,1,3)]], cex = .8)
+          legend("bottomright", legend = c("Herbs", "Shrubs", "Trees")[selec[c(2,1,3)]], fill = colGF[selec[c(2,1,3)]], cex = 1)
         }
       }
       
@@ -517,22 +517,27 @@ shinyServer(function(input, output, session){
   
   ### Outputs ####
   
+  # main plot
   output$PCAPlot <- renderPlot({
     plotPCA(input = input, list.sp = list.sp)
   })
   
+  # warnings for the uploaded file
   output$upload <- renderText({
     load_input(input)[[2]]
   })
   
-  output$file <- reactive({if(is.null(input$file1) | check_variables(input) < 3) FALSE else TRUE})
+  # enable the download feature
+  output$file <- reactive({if(is.null(load_input(input)[[1]]) | check_variables(input) < 3) FALSE else TRUE})
   outputOptions(output, 'file', suspendWhenHidden = FALSE)
   
+  # display meme if bad selection
   output$meme <- reactive({
     sGF <- c(input$other, input$herb, input$shrub, input$tree)
     if(check_variables(input) < 2 | sum(sGF) == 0) TRUE else FALSE})
   outputOptions(output, 'meme', suspendWhenHidden = FALSE)
   
+  # display the selected species names 
   output$sp <- renderText({
     if(!is.null(list.sp$sp)){
       sp_sort <- sort(list.sp$sp)
