@@ -113,7 +113,7 @@ ui <- function(){
                                                           p("Column names must be H for Plant height, SSD for Stem specific density,
                                               LA for Leaf area, LMA for Leaf mass per area, Nmass for Mass-based leaf 
                                               nitrogen content and SM for Diaspore mass."),
-                                                          HTML("<p> The traits values must be expressed in m (H), mg.mm<sup>-3</sup> (SSD), mm<sup>2</sup> (LA), g.m<sup>-2</sup> (LMA), mg.g<sp>-1</sup> (Nmass) and mg (SM).</p>"),
+                                                          HTML("<p> The traits values must be expressed in m (H), mg.mm<sup>-3</sup> (SSD), mm<sup>2</sup> (LA), g.m<sup>-2</sup> (LMA), mg.g<sp>-1</sup> (Nmass) and mg (SM). No data transformation is required before the upload.</p>"),
                                                           p("The csv file can also contain one or several extra columns with qualitative or quantitative values
                                               identified with different colours in the figure."),
                                                           HTML("<p> An example file containing 5 traits for 55 species can be downloaded <a target='blank' href='example.csv'>here</a>. </p>"),
@@ -209,7 +209,7 @@ ui <- function(){
                                     fluidRow(column(width = 6, offset = 3,
                                                     wellPanel(align = "justify",
                                                               HTML("<h1 align = 'center'>PhenoSpace <i>1.0.0</i> </h1>"),
-                                                              p("22/05/2020", align = "center"),
+                                                              p("03/08/2020", align = "center"),
                                                               HTML("<p align = 'center'><img src = 'GitHub.png' width = '20px' height = 'auto'> <a target='_blank' rel='noopener noreferrer' href='https://github.com/jsegrestin/phenospace'> We are on GitHub </a></p>"),
                                                               HTML("<p><b>Cite the application:</b> Segrestin, J., Sartori, K., Navas, M.-L., Kattge, J., Díaz, S., Garnier, É. (2020) PhenoSpace: a Shiny application to visualize trait data in the phenotypic space of the Global Spectrum of Plant Form and Function </p>")
                                                     )

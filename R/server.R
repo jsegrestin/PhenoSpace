@@ -127,7 +127,7 @@ shinyServer(function(input, output, session){
     if (!is.null(input_dat)){
       # if not specifyed -> blue
       if(input$colors %in% c("NA", "none")){
-        col <- brewer.pal(3, name = "Set2")[3]
+        col <- brewer.pal(3, name = "BrBG")[3]
         leg <- "none"
       }else{
         dat_col <- input_dat[, input$colors]
@@ -140,7 +140,7 @@ shinyServer(function(input, output, session){
         } else {
           dat_col <- droplevels(as.factor(dat_col))
           if (nlevels(dat_col) < 8){ #if categorial but under 8 categories -> qualitative colors
-            selectedcol <- brewer.pal(8, name = "Set2")
+            selectedcol <- brewer.pal(nlevels(dat_col), name = "BrBG")
             col <- selectedcol[dat_col]
             leg <- "dis"
           }else{ #if categorial but more than 8 categories -> blue gradient
