@@ -1,0 +1,91 @@
+{
+  "input": {
+    "app": 1,
+    "axis1": "PC1",
+    "axis2": "PC2",
+    "colors": "Stage",
+    "dec": ".",
+    "dec_csv": ".",
+    "file1": {
+      "name": [
+        "example.csv"
+      ],
+      "size": [
+        3275
+      ],
+      "type": [
+        "text/csv"
+      ],
+      "datapath": [
+        "0.csv"
+      ]
+    },
+    "find": "arab",
+    "format_plot": "png",
+    "H": false,
+    "h_plot": "26",
+    "herb": true,
+    "LA": true,
+    "LMA": true,
+    "name_csv": "PhenoSpace",
+    "name_plot": "PhenoSpace",
+    "Nmass": true,
+    "other": false,
+    "res_plot": "300",
+    "reset": 0,
+    "selec_plot": "All",
+    "sep": ";",
+    "sep_csv": ";",
+    "shrub": false,
+    "SM": false,
+    "species": "Arabidopsis thaliana",
+    "SSD": false,
+    "tabset": "app",
+    "theme": "Growth forms",
+    "tree": false,
+    "unit_plot": "cm",
+    "w_plot": "22"
+  },
+  "output": {
+    "file": true,
+    "meme": false,
+    "PCAPlot": {
+      "src": "[image data sha1: 1613ff790cbdb9618fcdce77780c8fde3b91380a]",
+      "width": 531,
+      "height": 700,
+      "coordmap": {
+        "panels": [
+          {
+            "domain": {
+              "left": -6.48,
+              "right": 6.48,
+              "bottom": -6.48,
+              "top": 6.48
+            },
+            "range": {
+              "left": 108.000020338987,
+              "right": 528.83999959322,
+              "bottom": 590.999984571426,
+              "top": 141.160000308571
+            },
+            "log": {
+              "x": null,
+              "y": null
+            },
+            "mapping": {
+
+            }
+          }
+        ],
+        "dims": {
+          "width": 531,
+          "height": 700
+        }
+      }
+    },
+    "sp": "<b>Species in the original data set from Díaz <i>et al.<\/i> (2016): <\/b> 1: Arabidopsis thaliana"
+  },
+  "export": {
+
+  }
+}
