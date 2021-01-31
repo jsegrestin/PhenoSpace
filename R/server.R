@@ -52,9 +52,9 @@ shinyServer(function(input, output, session){
         #check for numeric values
         if (all(unlist(lapply(input_dat[, traits], is.numeric)))){
           #check for positive values
-          if (any(unlist(lapply(input_dat[, traits], min, na.rm = TRUE)) < 0)){
+          if (any(unlist(lapply(input_dat[, traits], min, na.rm = TRUE)) <= 0)){
             warn <- paste0("<b>Non-positive values found in ",
-                           colnames(input_dat)[unlist(lapply(input_dat, min, na.rm = TRUE)) < 0],
+                           colnames(input_dat)[unlist(lapply(input_dat, min, na.rm = TRUE)) <= 0],
                            "</b>")
             input_dat <- NULL
           } else { # all good
