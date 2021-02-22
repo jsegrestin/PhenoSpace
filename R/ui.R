@@ -211,7 +211,7 @@ ui <- function(){
                                                               HTML("<h1 align = 'center'>PhenoSpace <i>1.0.0</i> </h1>"),
                                                               p("03/08/2020", align = "center"),
                                                               HTML("<p align = 'center'><img src = 'GitHub.png' width = '20px' height = 'auto'> <a target='_blank' rel='noopener noreferrer' href='https://github.com/jsegrestin/phenospace'> We are on GitHub </a></p>"),
-                                                              HTML("<p><b>Cite the application:</b> Segrestin, J., Sartori, K., Navas, M.-L., Kattge, J., Díaz, S., Garnier, É. (2021) PhenoSpace: a Shiny application to visualize trait data in the phenotypic space of the Global Spectrum of Plant Form and Function. <i> Ecology and Evolution </i> <a target='_blank' rel='noopener noreferrer' href='https://doi.org/10.1002/ece3.6928'>https://doi.org/10.1002/ece3.6928</a></p>")
+                                                              HTML("<p><b>Cite the application:</b> Segrestin, J., Sartori, K., Navas, M.-L., Kattge, J., Díaz, S., Garnier, É. (2021) PhenoSpace: a Shiny application to visualize trait data in the phenotypic space of the Global Spectrum of Plant Form and Function. <i> Ecology and Evolution </i>, 11: 1526-1534 <a target='_blank' rel='noopener noreferrer' href='https://doi.org/10.1002/ece3.6928'>https://doi.org/10.1002/ece3.6928</a></p>")
                                                     )
                                     )
                                     )
